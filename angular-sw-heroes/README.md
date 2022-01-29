@@ -1,7 +1,7 @@
 # AngularSwHeroes
 
 This project is a discovery of Angular during my front web lessons.
-You can find the repository here 
+You can find the repository [here](https://github.com/Lafie-rage/LA2_WebServiceLessons_Angular/tree/master/angular-sw-heroes) 
 
 ## Tutorial source
 
