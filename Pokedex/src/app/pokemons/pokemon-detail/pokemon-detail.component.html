@@ -1,0 +1,35 @@
+<button id="back-button" (click)="goBack()" mat-button>
+  <mat-icon>arrow_back</mat-icon>
+  <span>Back</span>
+</button>
+
+<div *ngIf="pokemon">
+  <div class="horizontal-container">
+    <div class="vertical-container text-center">
+      <img alt="{{pokemon.name | lowercase}}_artwork" class="artwork" src="assets/img/official-artwork/{{pokemon.id}}.png">
+      <h2>No. {{(pokemon.id | number: '3.0-0')}}</h2>
+    </div>
+
+    <div id="general-information" class="vertical-container fill-parent">
+      <div class="horizontal-container">
+        <p id="name">{{pokemon.name}}</p>
+        <button (click)="playAudio()" mat-button> <!-- TODO : Utiliser autoplay pour jouer le son -->
+          <mat-icon>
+            play_circle_outlined
+          </mat-icon>
+          <audio src="assets/audio/{{pokemon.id}}.mp3" autoplay="true"></audio>
+        </button>
+      </div>
+      <mat-chip-list>
+        <mat-chip *ngFor="let type of pokemon.types">
+          {{type}}
+        </mat-chip>
+      </mat-chip-list>
+      <h1>Taille : {{pokemon.height | number: '1.2'}}m</h1>
+      <h1>Poids : {{pokemon.weight | number: '1.2'}}kg</h1>
+    </div>
+  </div>
+  <p class="description">
+    {{ pokemon.description }}
+  </p>
+</div>

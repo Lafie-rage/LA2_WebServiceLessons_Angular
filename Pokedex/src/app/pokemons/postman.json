@@ -1,0 +1,260 @@
+{
+  "info": {
+    "_postman_id": "a6ad1e22-9fed-4ede-b644-cda437ebeb37",
+    "name": "Pokédex",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pokémons",
+      "item": [
+        {
+          "name": "Pokémons",
+          "id": "efd44c0a-46c8-4588-a961-7d626cd213f0",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pokedexApiUrl}}/pokemons"
+          },
+          "response": []
+        },
+        {
+          "name": "Pokémons with query params",
+          "id": "4f1312e9-90b8-4903-b205-31fc38afc216",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{pokedexApiUrl}}/pokemons?offset=20&limit=20",
+              "host": [
+                "{{pokedexApiUrl}}"
+              ],
+              "path": [
+                "pokemons"
+              ],
+              "query": [
+                {
+                  "key": "offset",
+                  "value": "20"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pokémons with search",
+          "id": "bdb1dd7c-30b9-44e3-9a10-7e4537bad12b",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{pokedexApiUrl}}/pokemons?search=B",
+              "host": [
+                "{{pokedexApiUrl}}"
+              ],
+              "path": [
+                "pokemons"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "B"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pokémon by id",
+          "id": "64c2f483-c2ee-4ab8-923a-ba6b6bd9e25c",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{pokedexApiUrl}}/pokemons/150"
+          },
+          "response": []
+        }
+      ],
+      "id": "2c77f502-fb4c-488c-a21a-bb42fbe7a596"
+    },
+    {
+      "name": "Trainers",
+      "item": [
+        {
+          "name": "Team",
+          "item": [
+            {
+              "name": "My team",
+              "id": "d813e2c4-0e28-4908-a7a1-84eca0461889",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": {
+                    "token": "{{access_token}}"
+                  }
+                },
+                "method": "GET",
+                "header": [],
+                "url": "{{pokedexApiUrl}}/trainers/me/team"
+              },
+              "response": []
+            },
+            {
+              "name": "Set my team",
+              "id": "607b247e-ada6-4272-b50d-acaddeed8ded",
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": {
+                    "token": "{{access_token}}"
+                  }
+                },
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n\t11,\n\t22,\n\t33,\n\t44,\n\t55,\n\t66\n]"
+                },
+                "url": "{{pokedexApiUrl}}/trainers/me/team"
+              },
+              "response": []
+            }
+          ],
+          "id": "86eaf75a-6d52-4653-a9b4-0606fd374413"
+        },
+        {
+          "name": "Create trainer",
+          "id": "4d296d1f-7e66-4759-bd8c-872cddf75faf",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "name": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"email\": \"francois.pouls@ig2i.centralelille.fr\",\n\t\"password\": \"toto12345\"\n}"
+            },
+            "url": "{{pokedexApiUrl}}/trainers"
+          },
+          "response": []
+        }
+      ],
+      "id": "6df2a4e0-363d-410b-9f9e-16c2fa41c632"
+    },
+    {
+      "name": "Login by email and password",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+              "postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);"
+            ]
+          }
+        }
+      ],
+      "id": "f07e46d1-79e4-4ae7-8b18-76d93bb50b78",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"email\": \"francois.poire@ig2i.centralelille.fr\",\n\t\"password\": \"toto12345\"\n}"
+        },
+        "url": "{{pokedexApiUrl}}/auth/login"
+      },
+      "response": []
+    },
+    {
+      "name": "Refresh token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody);",
+              "postman.setEnvironmentVariable(\"access_token\", jsonData.access_token);",
+              "postman.setEnvironmentVariable(\"refresh_token\", jsonData.refresh_token);"
+            ]
+          }
+        }
+      ],
+      "id": "75da6600-a164-483e-b0de-c8882a7e85c4",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"refresh_token\": \"{{refresh_token}}\"\n}"
+        },
+        "url": "{{pokedexApiUrl}}/auth/refresh"
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "4f5a8a23-f8bf-4a7a-9963-857685badeca",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "95dc5b21-d2c1-4822-a090-7d38e65f9d46",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "id": "cc055f6f-f1fd-4dda-848e-38d649efc241",
+      "key": "pokedexApiUrl",
+      "value": "http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io"
+    }
+  ]
+}

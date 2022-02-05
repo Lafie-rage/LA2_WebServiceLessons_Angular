@@ -1,0 +1,5 @@
+<mat-list>
+  <mat-list-item class="pokemons-list-item" *ngFor="let pokemon of pokemons" routerLink="/pokemons/{{pokemon.id}}">
+    <img alt="{{pokemon.name}}_sprite" class="sprite" src="/assets/img/sprites/{{pokemon.id}}.png">{{pokemon.id}}. {{pokemon.name}}
+  </mat-list-item>
+</mat-list>
