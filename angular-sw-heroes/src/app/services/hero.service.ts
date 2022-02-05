@@ -21,17 +21,17 @@ export class HeroService {
 
   getHeroes(): Observable<Hero[]> {
     return this.http.get<Hero[]>(this.heroesUrl).pipe(
-      tap(() => this.log("HeroService: fetched heroes"))
+      tap(() => this.log("fetched heroes"))
     ).pipe(
       catchError(this.handleError<Hero[]>('getHeroes', []))
     )
   }
 
-  getHero(id: Number): Observable<Hero | undefined> {
+  getHero(id: Number): Observable<Hero> {
     const url = `${this.heroesUrl}/${id}`
     return this.http.get<Hero>(url).pipe(
       tap(() => this.log(`HeroService: fetch hero ${id}`)),
-      catchError(this.handleError<undefined>(`getHero id=${id}`, undefined))
+      catchError(this.handleError<Hero>(`getHero id=${id}`, undefined))
     )
   }
 
@@ -79,9 +79,9 @@ export class HeroService {
   // endregion
 
   // region logging
-  private log(message: string): void {
-    this.messageService.add(`HeroService: ${message}`);
-  }
+    private log(message: string): void {
+      this.messageService.add(`HeroService: ${message}`);
+    }
 
   private handleError<T>(operation = 'operation', result?: T): (error: any) => Observable<T> {
     return (error: any): Observable<T> => {
