@@ -9,10 +9,7 @@ import {PokemonDetails} from "../models/pokemon-details.model";
   templateUrl: './pokemon-detail.component.html',
   styleUrls: ['./pokemon-detail.component.scss']
 })
-export class PokemonDetailComponent implements OnInit {
-  /**
-   * Represent the current shown item.
-   */
+export class PokemonDetailComponent implements OnInit, OnChanges {
   pokemon: PokemonDetails | undefined;
 
   @Input() pokemonId: number | undefined
