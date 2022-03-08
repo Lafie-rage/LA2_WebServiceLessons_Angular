@@ -12,3 +12,19 @@
   max-width: 48px;
   max-height: 48px;
 }
+
+.error-message {
+  padding-top: 48px;
+}
+
+.spinner-container {
+  margin-top: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-list {
+  height: 85vh;
+  overflow-y: auto;
+}

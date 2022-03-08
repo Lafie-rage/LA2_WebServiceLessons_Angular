@@ -40,6 +40,22 @@ export class PokemonService {
   }
 
   /**
+   * Call the API to get every Pokemon with a name containing the provided query or with the same id has the provided one.
+   * In case of error, an message is pushed through the MessageService.
+   *
+   * @param query A part of the Pokemon's name or its id.
+   *
+   * @return An Observable on which the fetched data will be emitted.
+   */
+  searchPokemons(query: String): Observable<PagedData<Pokemon>> {
+    const url = this.baseApiUrl + `pokemons?search=${query}`
+    return this.http.get<PagedData<Pokemon>>(url).pipe(
+      tap(() => this.log(`search pokemon with query : $query`)),
+      catchError(this.handleError<PagedData<Pokemon>>(`searchPokemons with query $query`, undefined))
+    )
+  }
+  
+  /**
    * Retrieve an item via the API.
    * The item is retrieved using the provided ID.
    * Manage errors messages and returns it as an Observable.

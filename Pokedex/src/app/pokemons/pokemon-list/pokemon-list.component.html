@@ -1,5 +1,17 @@
-<mat-list class="pokemons-list" infiniteScroll (scrolled)="onScroll()" [scrollWindow]="false" >
-  <mat-list-item class="pokemons-list-item" *ngFor="let pokemon of pokemons" routerLink="/pokemons/{{pokemon.id}}">
-    <img alt="{{pokemon.name}}_sprite" class="sprite" src="/assets/img/sprites/{{pokemon.id}}.png">{{pokemon.id}}. {{pokemon.name}}
+<mat-form-field appearance="fill">
+  <mat-label>Search</mat-label>
+  <input #searchInput (keyup)="searchPokemons(searchInput.value)" matInput type="search">
+  <mat-hint>Type a pokemon name or id to search it !</mat-hint>
+</mat-form-field>
+<mat-list (scrolled)="onScroll()" *ngIf="pokemons.length > 0" [scrollWindow]="false" infiniteScroll>
+  <mat-list-item (click)="onItemClicked(pokemon.id)" *ngFor="let pokemon of pokemons" class="pokemons-list-item">
+    <img alt="{{pokemon.name}}_sprite" class="sprite" src="/assets/img/sprites/{{pokemon.id}}.png">{{pokemon.id}}
+    . {{pokemon.name}}
   </mat-list-item>
 </mat-list>
+<p *ngIf="pokemons.length == 0 && !isLoading" class="error-message">
+  No result for you query
+</p>
+<div *ngIf="isLoading" class="spinner-container">
+  <mat-spinner [diameter]="48"></mat-spinner>
+</div>

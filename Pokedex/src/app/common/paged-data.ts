@@ -1,5 +1,5 @@
 export interface PagedData<T> {
-  data: [];
+  data: T[];
   limit: number;
   offset: number;
 }

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit} from '@angular/core';
 import {PokemonService} from "../services/pokemon.service";
 import {ActivatedRoute} from "@angular/router";
 import {Location} from "@angular/common"
-import {Pokemon, PokemonDetails} from "../models/pokemon-details.model";
+import {PokemonDetails} from "../models/pokemon-details.model";
 
 @Component({
   selector: 'app-pokemon-detail',
@@ -14,6 +14,7 @@ export class PokemonDetailComponent implements OnInit {
    * Represent the current shown item.
    */
   pokemon: PokemonDetails | undefined;
+  @Input() pokemonId: number | undefined
 
   constructor(private api: PokemonService, private route: ActivatedRoute, private location: Location) {
   }
@@ -24,6 +25,9 @@ export class PokemonDetailComponent implements OnInit {
    * When the API respond, displays the item on the view.
    */
   ngOnInit(): void {
+  }
+
+  ngOnChanges(): void {
     this.getPokemon()
   }
 
@@ -35,8 +39,10 @@ export class PokemonDetailComponent implements OnInit {
    * @private
    */
   private getPokemon() {
-    const id = Number(this.route.snapshot.paramMap.get('id'))
-    this.api.getPokemon(id).subscribe(pokemon => this.pokemon = pokemon)
+    console.log(this.pokemonId)
+    if(this.pokemonId != null) {
+      this.api.getPokemon(this.pokemonId).subscribe(pokemon => this.pokemon = pokemon)
+    }
   }
 
   /**
