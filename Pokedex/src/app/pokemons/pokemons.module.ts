@@ -5,6 +5,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatListModule} from "@angular/material/list";
 import {RouterModule} from "@angular/router";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
 
 
 
@@ -20,7 +21,8 @@ import {RouterModule} from "@angular/router";
     MatCardModule,
     MatGridListModule,
     MatListModule,
-    RouterModule
+    RouterModule,
+    InfiniteScrollModule
   ]
 })
 export class PokemonsModule { }
