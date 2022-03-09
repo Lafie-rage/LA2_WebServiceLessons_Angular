@@ -10,6 +10,10 @@ import {Pokemon, PokemonDetails} from "../models/pokemon-details.model";
 })
 export class PokemonService {
 
+  /**
+   * The base URL of the API.
+   * @private
+   */
   private baseApiUrl = "http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/"
 
 
@@ -18,6 +22,12 @@ export class PokemonService {
 
   // region CRUD
 
+  /**
+   * Retrieve the first bit of the item list via the API.
+   * Manage errors messages and returns it as an Observable.
+   *
+   * @return The Observable containing the list as a PagedData.
+   */
   getPokemons(): Observable<PagedData<Pokemon>> {
     const url = this.baseApiUrl + "pokemons"
     return this.http.get<PagedData<Pokemon>>(url).pipe(
@@ -26,6 +36,15 @@ export class PokemonService {
     )
   }
 
+  /**
+   * Retrieve an item via the API.
+   * The item is retrieved using the provided ID.
+   * Manage errors messages and returns it as an Observable.
+   *
+   * @param id The id of the asked item.
+   *
+   * @return The Observable contains the item as a PokemonDetails.
+   */
   getPokemon(id: Number): Observable<PokemonDetails> {
     const url = this.baseApiUrl + `pokemons/${id}`
     return this.http.get<PokemonDetails>(url).pipe(
@@ -38,10 +57,26 @@ export class PokemonService {
 
   // region logging
 
+  /**
+   * Transmit a new log message to the MessageService.
+   *
+   * @param message The message to transmit
+   * @private
+   */
   private log(message: string): void {
     this.messagesService.add(`PokemonService: ${message}`);
   }
 
+  /**
+   * Manage an error message by printing it in the console logs and transmiting it to the MessageService via the log() method.
+   * Then, returns an Observable of the provided result type.
+   *
+   * @param operation A string representing the operation that throws the error.
+   * @param result The wished result of calling function.
+   *
+   * @return A anonymous function which ask of an error of any type and returns an Observable of the provided result type.
+   * @private
+   */
   private handleError<T>(operation = 'operation',result?: T): (error: any) => Observable<T> {
     return (error: any): Observable<T> => {
       // TODO : send the error to remote logging infrastructure
