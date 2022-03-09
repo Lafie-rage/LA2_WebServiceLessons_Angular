@@ -13,8 +13,20 @@ export class PokemonListComponent implements OnInit {
    */
   pokemons: Pokemon[] = [];
 
+  /**
+   * Represent the loading status of the data to the view.
+   */
   isLoading = true
 
+  /**
+   * The current offset of the displayed list of items.
+   */
+  currentListOffset = 0
+
+  /**
+   * Event representing that a item of the list has been clicked on.
+   * Provide the ID of the clicked item.
+   */
   @Output() onPokemonClickedEvent = new EventEmitter<number>()
 
   constructor(private api: PokemonService) {
@@ -78,7 +90,8 @@ export class PokemonListComponent implements OnInit {
         }
       )
     } else {
-      this.getPokemons()
+      this.getPokemons(0)
+      this.currentListOffset = 0
     }
   }
 }

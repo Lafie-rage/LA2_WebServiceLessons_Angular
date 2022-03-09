@@ -54,7 +54,7 @@ export class PokemonService {
       catchError(this.handleError<PagedData<Pokemon>>(`searchPokemons with query $query`, undefined))
     )
   }
-  
+
   /**
    * Retrieve an item via the API.
    * The item is retrieved using the provided ID.
