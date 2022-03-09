@@ -7,9 +7,10 @@ import {Component, OnInit} from '@angular/core';
 })
 export class PokedexComponent implements OnInit {
 
-  selectedPokemon : number | undefined
+  selectedPokemon: number | undefined
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
