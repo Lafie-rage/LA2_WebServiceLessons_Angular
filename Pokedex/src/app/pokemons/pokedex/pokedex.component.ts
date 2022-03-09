@@ -15,7 +15,12 @@ export class PokedexComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  /**
+   * Callback when an item of the list is being clicked on.
+   * Transmit the id of the clicked item to the details view.
+   *
+   * @param pokemonId The id of the clicked item.
+   */
   onPokemonSelected(pokemonId: number) {
     this.selectedPokemon = pokemonId
   }

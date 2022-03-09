@@ -47,6 +47,7 @@ export class PokemonListComponent implements OnInit {
   /**
    * Retrieve items from the API depending on the current size of the item list displayed.
    * When API respond, the list is updated adding new retrieved item to the current list.
+   * Set loading to false after having displayed the list.
    *
    * @param offset The starting point of the list. By default, the length of the list displayed to the user.
    */

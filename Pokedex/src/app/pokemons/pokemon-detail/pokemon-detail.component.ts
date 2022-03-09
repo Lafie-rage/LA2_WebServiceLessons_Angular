@@ -22,12 +22,15 @@ export class PokemonDetailComponent implements OnInit {
 
   /**
    * Callback when the view is initialized.
-   * Call the API in order to get the item to display.
-   * When the API respond, displays the item on the view.
    */
   ngOnInit(): void {
   }
 
+  /**
+   * Callback when the view is changed/reload.
+   * Call the API in order to get the item to display.
+   * When the API respond, displays the item on the view.
+   */
   ngOnChanges(): void {
     this.getPokemon()
   }
