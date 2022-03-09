@@ -3,7 +3,7 @@
   <input #searchInput (keyup)="searchPokemons(searchInput.value)" matInput type="search">
   <mat-hint>Type a pokemon name or id to search it !</mat-hint>
 </mat-form-field>
-<mat-list (scrolledUp)="onScrollUp()" (scrolled)="onScrollDown()" [infiniteScrollUpDistance]="5" [infiniteScrollDistance]="5" [alwaysCallback]="true" *ngIf="pokemons.length > 0 && !isLoading" [scrollWindow]="false" [infiniteScrollThrottle]="300" infiniteScroll>
+<mat-list (scrolled)="onScroll()" *ngIf="pokemons.length > 0 && !isLoading" [scrollWindow]="false" infiniteScroll>
   <mat-list-item (click)="onItemClicked(pokemon.id)" *ngFor="let pokemon of pokemons" class="pokemons-list-item">
     <img alt="{{pokemon.name}}_sprite" class="sprite" src="/assets/img/sprites/{{pokemon.id}}.png">{{pokemon.id}}
     . {{pokemon.name}}

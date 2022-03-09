@@ -19,11 +19,6 @@ export class PokemonListComponent implements OnInit {
   isLoading = true
 
   /**
-   * The current offset of the displayed list of items.
-   */
-  currentListOffset = 0
-
-  /**
    * Event representing that a item of the list has been clicked on.
    * Provide the ID of the clicked item.
    */
@@ -38,6 +33,7 @@ export class PokemonListComponent implements OnInit {
    * When the API respond, displays the list on the view.
    */
   ngOnInit(): void {
+    this.isLoading = true
     this.getPokemons()
   }
 
@@ -51,10 +47,11 @@ export class PokemonListComponent implements OnInit {
   /**
    * Retrieve items from the API depending on the current size of the item list displayed.
    * When API respond, the list is updated adding new retrieved item to the current list.
+   *
+   * @param offset The starting point of the list. By default, the length of the list displayed to the user.
    */
-  getPokemons() {
-    this.isLoading = true
-    this.api.getPokemons(this.pokemons.length).subscribe(pokemons => {
+  getPokemons(offset: number = this.pokemons.length) {
+    this.api.getPokemons(offset).subscribe(pokemons => {
       console.log(pokemons.data)
       this.pokemons = this.pokemons.concat(pokemons.data)
       this.isLoading = false
@@ -91,7 +88,6 @@ export class PokemonListComponent implements OnInit {
       )
     } else {
       this.getPokemons(0)
-      this.currentListOffset = 0
     }
   }
 }

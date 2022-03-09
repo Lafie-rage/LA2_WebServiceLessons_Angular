@@ -14,6 +14,7 @@ export class PokemonDetailComponent implements OnInit {
    * Represent the current shown item.
    */
   pokemon: PokemonDetails | undefined;
+
   @Input() pokemonId: number | undefined
 
   constructor(private api: PokemonService, private route: ActivatedRoute, private location: Location) {

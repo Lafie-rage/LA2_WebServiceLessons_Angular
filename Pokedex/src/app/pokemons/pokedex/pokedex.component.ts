@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatSidenav} from "@angular/material/sidenav";
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-pokedex',
@@ -8,9 +7,10 @@ import {MatSidenav} from "@angular/material/sidenav";
 })
 export class PokedexComponent implements OnInit {
 
-  selectedPokemon : number | undefined
+  selectedPokemon: number | undefined
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
