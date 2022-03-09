@@ -19,6 +19,11 @@ export class PokemonListComponent implements OnInit {
   isLoading = true
 
   /**
+   * The current offset of the displayed list of items.
+   */
+  currentListOffset = 0
+
+  /**
    * Event representing that a item of the list has been clicked on.
    * Provide the ID of the clicked item.
    */

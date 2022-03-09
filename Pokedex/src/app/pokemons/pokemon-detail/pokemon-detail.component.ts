@@ -9,18 +9,12 @@ import {PokemonDetails} from "../models/pokemon-details.model";
   templateUrl: './pokemon-detail.component.html',
   styleUrls: ['./pokemon-detail.component.scss']
 })
-export class PokemonDetailComponent implements OnInit, OnChanges {
+export class PokemonDetailComponent implements OnChanges {
   pokemon: PokemonDetails | undefined;
 
   @Input() pokemonId: number | undefined
 
   constructor(private api: PokemonService, private route: ActivatedRoute, private location: Location) {
-  }
-
-  /**
-   * Callback when the view is initialized.
-   */
-  ngOnInit(): void {
   }
 
   /**
