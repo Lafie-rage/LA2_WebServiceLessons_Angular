@@ -93,6 +93,8 @@ export class PokemonListComponent implements OnInit {
         }
       )
     } else {
+      this.pokemons = []
+      this.isLoading = true
       this.getPokemons(0)
     }
   }
