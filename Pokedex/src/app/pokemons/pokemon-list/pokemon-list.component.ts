@@ -22,12 +22,24 @@ export class PokemonListComponent implements OnInit {
    * When the API respond, displays the list on the view.
    */
   ngOnInit(): void {
-    this.api.getPokemons().subscribe(pokemons => this.pokemons = pokemons.data)
+    this.getPokemons()
   }
 
   /**
    * Callback when the view is scrolled. Actually does nothing at the moment.
    */
   onScroll() {
+    this.getPokemons()
+  }
+
+  /**
+   * Retrieve items from the API depending on the current size of the item list displayed.
+   * When API respond, the list is updated adding new retrieved item to the current list.
+   */
+  getPokemons() {
+    this.api.getPokemons(this.pokemons.length).subscribe(pokemons => {
+      console.log(pokemons.data)
+      this.pokemons = this.pokemons.concat(pokemons.data)
+    })
   }
 }

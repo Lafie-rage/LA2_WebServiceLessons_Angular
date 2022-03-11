@@ -24,15 +24,18 @@ export class PokemonService {
 
   /**
    * Retrieve the first bit of the item list via the API.
+   * This bit of the list is determined by its offset which is provided.
    * Manage errors messages and returns it as an Observable.
+   *
+   * @param offset The starting point from which the N items must be returned.
    *
    * @return The Observable containing the list as a PagedData.
    */
-  getPokemons(): Observable<PagedData<Pokemon>> {
-    const url = this.baseApiUrl + "pokemons"
+  getPokemons(offset: number): Observable<PagedData<Pokemon>> {
+    const url = this.baseApiUrl + `pokemons?limit=20&offset=${offset}`
     return this.http.get<PagedData<Pokemon>>(url).pipe(
-      tap(() => this.log("fetched pokemons")),
-      catchError(this.handleError<PagedData<Pokemon>>('getPokemons', undefined))
+      tap(() => this.log(`fetched pokemons with offset ${offset}`)),
+      catchError(this.handleError<PagedData<Pokemon>>(`getPokemons with offset ${offset}`, undefined))
     )
   }
 
