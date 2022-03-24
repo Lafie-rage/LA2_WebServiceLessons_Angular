@@ -1,0 +1,22 @@
+.item-list-container {
+  display: flex;
+  flex-direction: row;
+  width: 100vh;
+  justify-content: space-between;
+}
+
+.left-container, .right-container {
+  display: flex;
+  align-items: center;
+}
+
+.sprite {
+  max-width: 48px;
+  max-height: 48px;
+}
+
+.fab-container {
+  display: flex;
+  flex-direction: row-reverse;
+}
+

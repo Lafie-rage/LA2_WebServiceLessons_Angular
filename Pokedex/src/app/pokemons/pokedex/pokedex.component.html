@@ -1,8 +1,15 @@
-<mat-sidenav-container hasBackdrop="false" autosize="true"> <!-- Pour que le push fonctionne, il faut que le taille du container soit recalculée à chaque "mise à jour de l'UI", on utilise alors autosize -->
-  <mat-sidenav opened="true" disableClose="true" mode="push">
+<mat-sidenav-container autosize="true" hasBackdrop="false">
+  <!-- Pour que le push fonctionne, il faut que le taille du container soit recalculée à chaque "mise à jour de l'UI", on utilise alors autosize -->
+  <mat-sidenav disableClose="true" mode="push" opened="true">
     <app-pokemon-list (onPokemonClickedEvent)="onPokemonSelected($event)"></app-pokemon-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
-    <app-pokemon-detail *ngIf="selectedPokemon" [pokemonId]="selectedPokemon"></app-pokemon-detail>
+    <div *ngIf="selectedPokemon" class="details-container">
+      <app-pokemon-detail [pokemonId]="selectedPokemon"></app-pokemon-detail>
+      <button (click)="onAddButtonClick()" color="primary" mat-raised-button>
+        Add to my team
+      </button>
+    </div>
+
   </mat-sidenav-content>
 </mat-sidenav-container>

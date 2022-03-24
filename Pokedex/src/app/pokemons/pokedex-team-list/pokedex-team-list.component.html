@@ -1,0 +1,22 @@
+<mat-list *ngIf="pokemons.length > 0">
+  <mat-list-item *ngFor="let pokemon of pokemons; let index = index" class="pokemons-list-item">
+    <div class="item-list-container">
+      <div class="left-container">
+        <img alt="{{pokemon.name}}_sprite" class="sprite" src="/assets/img/sprites/{{pokemon.id}}.png">{{index + 1}}
+        . {{pokemon.name}}
+      </div>
+      <div class="right-container">
+        <button (click)="onRemoveButtonClicked(index)" color="warn" mat-icon-button>
+          <mat-icon>
+            remove_circle_outline
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-list>
+<div *ngIf="pokemons.length < 6" class="fab-container">
+  <button (click)="onAddButtonClick()" color="primary" mat-fab>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>

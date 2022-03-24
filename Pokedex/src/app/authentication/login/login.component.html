@@ -1,0 +1,23 @@
+<mat-card>
+  <h3>Login</h3>
+  <mat-form-field appearance="fill">
+    <mat-label>Email</mat-label>
+    <input #email [errorStateMatcher]="matcher" [formControl]="emailFormControl" matInput placeholder="email@example.com"
+           type="email">
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+      Please enter a valid email address !
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email address is <strong>required</strong> !
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Password</mat-label>
+    <input #password (keyup.enter)="login(email.value, password.value)" [errorStateMatcher]="matcher" [formControl]="requiredFieldFormControl" matInput
+           type="password">
+    <mat-error *ngIf="requiredFieldFormControl.hasError('required')">
+      Password is <strong>required</strong> !
+    </mat-error>
+  </mat-form-field>
+  <button (click)="login(email.value, password.value)" color="primary" mat-raised-button>Log in</button>
+</mat-card>

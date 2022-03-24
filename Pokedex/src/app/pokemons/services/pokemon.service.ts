@@ -1,26 +1,23 @@
 import {Injectable} from '@angular/core';
-import {catchError, Observable, of, tap} from 'rxjs';
-import {HttpClient} from "@angular/common/http";
+import {catchError, Observable, tap} from 'rxjs';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {MessagesService} from "../../messages/services/message.service";
 import {PagedData} from "../../common/paged-data";
 import {Pokemon, PokemonDetails} from "../models/pokemon-details.model";
+import {BaseService} from "../../common/services/BaseService";
+import {CookieService} from "ngx-cookie-service";
+import {AuthenticationTokens} from "../../authentication/models/authentication-tokens.models";
 
 @Injectable({
   providedIn: 'root'
 })
-export class PokemonService {
+export class PokemonService extends BaseService {
 
-  /**
-   * The base URL of the API.
-   * @private
-   */
-  private baseApiUrl = "http://app-ec21e68e-3e55-42d7-b1ae-3eef7507a353.cleverapps.io/"
-
-
-  constructor(private messagesService: MessagesService, private http: HttpClient) {
+  constructor(private http: HttpClient, messagesService: MessagesService, private cookieService: CookieService) {
+    super(messagesService);
   }
 
-  // region CRUD
+  // region CRUD Pokemons
 
   /**
    * Retrieve the first bit of the item list via the API.
@@ -68,46 +65,68 @@ export class PokemonService {
     const url = this.baseApiUrl + `pokemons/${id}`
     return this.http.get<PokemonDetails>(url).pipe(
       tap(() => this.log(`fetched pokemons with id : ${id}`)),
-      catchError(this.handleError<PokemonDetails>('getPoKemon', undefined))
+      catchError(this.handleError<PokemonDetails>('getPokemon', undefined))
     )
   }
 
   // endregion
 
-  // region logging
+  // region CRUD Team
 
   /**
-   * Transmit a new log message to the MessageService.
+   * Retrieve the ids of the pokemon in the team player.
+   * Manage JWT authentication.
    *
-   * @param message The message to transmit
-   * @private
+   * @return An observable containing the list of the ids.
    */
-  private log(message: string): void {
-    this.messagesService.add(`PokemonService: ${message}`);
+  getPokemonTeam(): Observable<number[]> {
+    const url = this.baseApiUrl + "trainers/me/team"
+    const token = this.getAuthenticationToken()
+    const headers = new HttpHeaders({'Authorization': `Bearer ${token.access_token}`})
+
+    return this.http.get<number[]>(url, {
+      headers
+    }).pipe(
+      tap(() => this.log("fetched pokemons team")),
+      catchError(this.handleError<number[]>("getPokemonTeam", []))
+    )
   }
 
   /**
-   * Manage an error message by printing it in the console logs and transmiting it to the MessageService via the log() method.
-   * Then, returns an Observable of the provided result type.
+   * Update the pokemon team of a user depending on the provided new list of pokemons.
    *
-   * @param operation A string representing the operation that throws the error.
-   * @param result The wished result of calling function.
-   *
-   * @return A anonymous function which ask of an error of any type and returns an Observable of the provided result type.
-   * @private
+   * @param newTeamId The id of the pokemons in the team.
+   * @return An observable containing nothing.
    */
-  private handleError<T>(operation = 'operation',result?: T): (error: any) => Observable<T> {
-    return (error: any): Observable<T> => {
-      // TODO : send the error to remote logging infrastructure
-      console.error(error); // Log to console instead
+  updatePokemonTeam(newTeamId: number[]): Observable<never> {
+    const url = this.baseApiUrl + "trainers/me/team"
+    const token = this.getAuthenticationToken()
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token.access_token}`,
+      'Content-Type': 'application/json',
+    })
 
-      // TODO : Better job of transforming error for user consumption
-      this.log(`${operation} failed: ${error.message}`)
+    const body = newTeamId
 
-      // Let the app keep running by returning an empty result
-      return of(result as T)
-    }
+    return this.http.put<never>(url, body, {
+      headers,
+    }).pipe(
+      tap(() => this.log(`Updated pokemon team using id ${body}`)),
+      catchError(this.handleError<never>("updatePokemonTeam", undefined))
+    )
   }
 
   // endregion
+
+  /**
+   * Retrieve the authentication token linked to the logged user.
+   *
+   * @return The authentication token of the current user.
+   */
+  getAuthenticationToken(): AuthenticationTokens {
+    return {
+      access_token: this.cookieService.get("JWT_TOKEN_ACCESS"),
+      refresh_token: this.cookieService.get("JWT_TOKEN_REFRESH"),
+    }
+  }
 }

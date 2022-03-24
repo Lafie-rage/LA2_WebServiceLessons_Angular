@@ -14,18 +14,27 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatInputModule} from "@angular/material/input";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {PokedexTeamComponent} from './pokedex-team/pokedex-team.component';
+import {PokedexTeamListComponent} from './pokedex-team-list/pokedex-team-list.component';
+import {DialogRemovePokemon} from "./pokedex-team-list/dialog/dialog-remove-pokemon";
+import {MatDialogModule} from "@angular/material/dialog";
+import {DialogAddPokemon} from "./pokedex/dialog/dialog-add-pokemon";
 
 
 @NgModule({
   declarations: [
     PokemonListComponent,
     PokedexComponent,
-    PokemonDetailComponent
+    PokemonDetailComponent,
+    PokedexTeamComponent,
+    PokedexTeamListComponent,
+    DialogRemovePokemon,
+    DialogAddPokemon,
   ],
   exports: [
     PokemonListComponent,
     PokedexComponent,
-    PokemonDetailComponent
+    PokemonDetailComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +48,8 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
     MatIconModule,
     MatChipsModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
   ]
 })
 export class PokemonsModule {
