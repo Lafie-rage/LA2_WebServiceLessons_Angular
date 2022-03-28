@@ -85,14 +85,15 @@ export class PokemonListComponent implements OnInit {
    * @param query The query typed in the search input field.
    */
   searchPokemons(query: string): void {
+    this.isLoading = true
     if (query.length > 0) {// Is not empty
-      this.isLoading = true
       this.api.searchPokemons(query).subscribe(result => {
           this.pokemons = result.data
           this.isLoading = false
         }
       )
     } else {
+      this.pokemons = []
       this.getPokemons(0)
     }
   }
