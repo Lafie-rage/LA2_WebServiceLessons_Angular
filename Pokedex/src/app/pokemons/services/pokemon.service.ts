@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {catchError, Observable, tap} from 'rxjs';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {MessagesService} from "../../messages/services/message.service";
 import {PagedData} from "../../common/paged-data";
 import {Pokemon, PokemonDetails} from "../models/pokemon-details.model";
@@ -44,9 +44,11 @@ export class PokemonService extends BaseService {
    *
    * @return An Observable on which the fetched data will be emitted.
    */
-  searchPokemons(query: String): Observable<PagedData<Pokemon>> {
-    const url = this.baseApiUrl + `pokemons?search=${query}`
-    return this.http.get<PagedData<Pokemon>>(url).pipe(
+  searchPokemons(query: string): Observable<PagedData<Pokemon>> {
+    const url = this.baseApiUrl + `pokemons`
+    const params = new HttpParams()
+      .set("search", query)
+    return this.http.get<PagedData<Pokemon>>(url, {params}).pipe(
       tap(() => this.log(`search pokemon with query : $query`)),
       catchError(this.handleError<PagedData<Pokemon>>(`searchPokemons with query $query`, undefined))
     )
